@@ -1,5 +1,75 @@
 {
-  "posts": [{ "id": 1, "title": "json-server", "author": "typicode" }],
-  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
-  "profile": { "name": "typicode" }
+  "members": [
+    {
+      "id": "001",
+      "name": "Paul",
+      "mail": "paul@mail.com",
+      "department": "Marketing",
+      "position": "Manager"
+    },
+    {
+      "id": "002",
+      "name": "Tom",
+      "mail": "tom@mail.com",
+      "department": "Engineering",
+      "position": "Manager"
+    },
+    {
+      "id": "003",
+      "name": "Ethan",
+      "mail": "ethan@mail.com",
+      "department": "Accounting",
+      "position": "Manager"
+    },
+    {
+      "id": "004",
+      "name": "Jasper",
+      "mail": "paul@mail.com",
+      "department": "Accounting",
+      "position": "Manager"
+    },
+    {
+      "id": "005",
+      "name": "Brandon",
+      "mail": "paul@mail.com",
+      "department": "Marketing",
+      "position": "Manager"
+    },
+    {
+      "id": "006",
+      "name": "Jack",
+      "mail": "paul@mail.com",
+      "department": "Accounting",
+      "position": "Manager"
+    },
+    {
+      "id": "007",
+      "name": "Aik",
+      "mail": "paul@mail.com",
+      "department": "Engineering",
+      "position": "Manager"
+    },
+    {
+      "id": "008",
+      "name": "Cherry",
+      "mail": "paul@mail.com",
+      "department": "Accounting",
+      "position": "Manager"
+    },
+    {
+      "id": "009",
+      "name": "Jackson",
+      "mail": "paul@mail.com",
+      "department": "Engineering",
+      "position": "Manager"
+    },
+    {
+      "id": "010",
+      "name": "Michel",
+      "mail": "paul@mail.com",
+      "department": "Marketing",
+      "position": "Manager"
+    }
+  ],
+  "department": ["Marketing", "Engineering", "Accounting"]
 }
