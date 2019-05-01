@@ -1,5 +1,8 @@
 <template>
-  <HotTable :data="members" :settings="hotSettings"/>
+  <div>
+    <button @click="getTableData">tableData</button>
+    <HotTable ref="hotTable" :data="members" :settings="hotSettings"/>
+  </div>
 </template>
 
 <script>
@@ -23,34 +26,46 @@ export default {
   data: function() {
     return {
       hotSettings: {
-        // data: [
-        //   ["", "Ford", "Volvo", "Toyota", "Honda"],
-        //   ["2016", 10, , 12, 13],
-        //   ["2017", 20, 11, 14, 13],
-        //   ["2018", 30, 15, 12, 13]
-        // ],
         colHeaders: true,
-        rowHeaders: true
+        rowHeaders: true,
+        columns: [
+          { data: "id", type: "text", placeholder: "ID" },
+          { data: "name", type: "text", placeholder: "name" },
+          { data: "mail", type: "text", placeholder: "mail" },
+          { data: "department", type: "text", placeholder: "department" },
+          { data: "position", type: "text", placeholder: "position" }
+        ]
       }
     };
   },
-  // mounted: async function() {
-  //   console.log(await this.department);
-  //   console.log(this.department);
-  // },
+  created: async function() {
+    // console.log(await this.department);
+    // console.log(this.department);
+    await this.$emit("getTableContents");
+    // await this.$refs.hotTable.hotInstance.render();
+    console.log(await this.members);
+  },
   // watch: {
-  //   members: function() {
+  //   members: async function() {
   //     console.log(this.members);
+  //     await this.$refs.hotTable.hotInstance.render();
+  //     console.log(this.$refs.hotTable.hotInstance.getData());
   //   },
   //   department: function() {
   //     console.log(this.department);
   //   }
   // },
-  computed: {
-    aut: function() {
-      return (this.settings.data = this.author);
+  methods: {
+    getTableData: function() {
+      this.$refs.hotTable.hotInstance.render();
+      console.log(this.$refs.hotTable.hotInstance.getData());
     }
   }
+  // computed: {
+  //   aut: function() {
+  //     return (this.settings.data = this.author)
+  //   }
+  // }
 };
 </script>
 

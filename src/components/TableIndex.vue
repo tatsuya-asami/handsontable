@@ -1,9 +1,8 @@
 <template>
-  <Handsontable :members="members" :department="department"/>
+  <Handsontable :members="members" :department="department" @getTableContents="getTableContents"/>
 </template>
 
 <script>
-import { HotTable } from "@handsontable/vue";
 import api from "axios";
 import Handsontable from "./Handsontable";
 
@@ -21,9 +20,9 @@ export default {
   computed: {
     getUrl: () => "http://localhost:3000"
   },
-  created: function() {
-    this.getTableContents();
-  },
+  // created: function() {
+  //   this.getTableContents();
+  // },
   methods: {
     getMembers: function() {
       return api.get(`${this.getUrl}/members`);
@@ -38,8 +37,6 @@ export default {
 
       this.members = membersData;
       this.department = departmentData;
-      console.log(this.members);
-      console.log(this.department);
     }
   }
 };
