@@ -1,5 +1,5 @@
 <template>
-  <Handsontable/>
+  <Handsontable :members="members" :department="department"/>
 </template>
 
 <script>
@@ -13,18 +13,37 @@ export default {
     Handsontable
   },
   data: function() {
-    return {};
+    return {
+      members: [],
+      department: []
+    };
+  },
+  computed: {
+    getUrl: () => "http://localhost:3000"
   },
   created: function() {
     this.getTableContents();
   },
   methods: {
-    getTableContents: function() {
-      alert();
+    getMembers: function() {
+      return api.get(`${this.getUrl}/members`);
+    },
+    getDepartment: function() {
+      return api.get(`${this.getUrl}/department`);
+    },
+    getTableContents: async function() {
+      const getData = await api.all([this.getMembers(), this.getDepartment()]);
+      const membersData = getData[0].data;
+      const departmentData = getData[1].data;
+
+      this.members = membersData;
+      this.department = departmentData;
+      console.log(this.members);
+      console.log(this.department);
     }
   }
 };
 </script>
 
-<style src="../../node_modules/handsontable/dist/handsontable.full.css"></style>
+<style></style>
 
