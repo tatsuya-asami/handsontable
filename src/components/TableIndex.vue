@@ -1,5 +1,10 @@
 <template>
-  <Handsontable :members="members" :department="department" @getTableContents="getTableContents"/>
+  <Handsontable
+    :members="members"
+    :department="department"
+    @getTableContents="getTableContents"
+    @updateMembers="updateMembers"
+  />
 </template>
 
 <script>
@@ -20,9 +25,6 @@ export default {
   computed: {
     getUrl: () => "http://localhost:3000"
   },
-  // created: function() {
-  //   this.getTableContents();
-  // },
   methods: {
     getMembers: function() {
       return api.get(`${this.getUrl}/members`);
@@ -37,6 +39,9 @@ export default {
 
       this.members = membersData;
       this.department = departmentData;
+    },
+    updateMembers: function(payload) {
+      this.members = payload;
     }
   }
 };

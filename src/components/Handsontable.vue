@@ -1,6 +1,7 @@
 <template>
   <div>
     <button @click="getTableData">tableData</button>
+    <button @click="getMembers">members</button>
     <HotTable ref="hotTable" :data="members" :settings="hotSettings"/>
   </div>
 </template>
@@ -25,24 +26,47 @@ export default {
   },
   data: function() {
     return {
+      test: "testttt",
       hotSettings: {
-        colHeaders: true,
+        dataSchema: {
+          id: null,
+          name: null,
+          mail: null,
+          department: null,
+          position: null
+        },
+        colHeaders: ["", "ID", "Name", "E-mail", "Department", "Position"],
         rowHeaders: true,
         columns: [
-          { data: "id", type: "text", placeholder: "ID" },
+          { data: "checkbox", type: "checkbox" },
+          { data: "id", type: "text", placeholder: "ID", readOnly: true },
           { data: "name", type: "text", placeholder: "name" },
-          { data: "mail", type: "text", placeholder: "mail" },
-          { data: "department", type: "text", placeholder: "department" },
+          { data: "mail", type: "text", placeholder: "E-mail" },
+          {
+            data: "department",
+            type: "dropdown",
+            placeholder: "department",
+            source: ["test", "test2", "test3"]
+          },
           { data: "position", type: "text", placeholder: "position" }
-        ]
+        ],
+        contextMenu: {
+          items: {
+            row_above: true,
+            row_below: false,
+            remove_row: {
+              name: "行を削除"
+            }
+          }
+        },
+        minSpareRows: 1,
+        beforeRemoveRow: this.beforeRemoveRowVue,
+        afterChange: this.afterChangeVue
       }
     };
   },
   created: async function() {
-    // console.log(await this.department);
-    // console.log(this.department);
     await this.$emit("getTableContents");
-    // await this.$refs.hotTable.hotInstance.render();
     console.log(await this.members);
   },
   // watch: {
@@ -57,15 +81,26 @@ export default {
   // },
   methods: {
     getTableData: function() {
-      this.$refs.hotTable.hotInstance.render();
-      console.log(this.$refs.hotTable.hotInstance.getData());
+      console.log(this.$refs.hotTable.hotInstance.getSourceData());
+    },
+    getMembers: function() {
+      console.log(this.members);
+    },
+    beforeRemoveRowVue: function(index, amount, physicalRows, source) {
+      console.log(this.test);
+      console.log(index);
+      console.log(amount);
+      console.log(physicalRows);
+      console.log(source);
+    },
+    afterChangeVue: function(changes, source) {
+      if (source === "loadData") {
+        return;
+      }
+      const tableData = this.$refs.hotTable.hotInstance.getSourceData();
+      this.$emit("updateMembers", tableData);
     }
   }
-  // computed: {
-  //   aut: function() {
-  //     return (this.settings.data = this.author)
-  //   }
-  // }
 };
 </script>
 

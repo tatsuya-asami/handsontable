@@ -34,41 +34,6 @@
       "mail": "paul@mail.com",
       "department": "Marketing",
       "position": "Manager"
-    },
-    {
-      "id": "006",
-      "name": "Jack",
-      "mail": "paul@mail.com",
-      "department": "Accounting",
-      "position": "Manager"
-    },
-    {
-      "id": "007",
-      "name": "Aik",
-      "mail": "paul@mail.com",
-      "department": "Engineering",
-      "position": "Manager"
-    },
-    {
-      "id": "008",
-      "name": "Cherry",
-      "mail": "paul@mail.com",
-      "department": "Accounting",
-      "position": "Manager"
-    },
-    {
-      "id": "009",
-      "name": "Jackson",
-      "mail": "paul@mail.com",
-      "department": "Engineering",
-      "position": "Manager"
-    },
-    {
-      "id": "010",
-      "name": "Michel",
-      "mail": "paul@mail.com",
-      "department": "Marketing",
-      "position": "Manager"
     }
   ],
   "department": ["Marketing", "Engineering", "Accounting"]
