@@ -37,6 +37,8 @@ export default {
       const membersData = getData[0].data;
       const departmentData = getData[1].data;
 
+      membersData.map(key => (key.initial = true));
+
       this.members = membersData;
       this.department = departmentData;
     },

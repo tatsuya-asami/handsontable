@@ -39,14 +39,13 @@ export default {
         rowHeaders: true,
         columns: [
           { data: "checkbox", type: "checkbox" },
-          { data: "id", type: "text", placeholder: "ID", readOnly: true },
+          { data: "id", type: "text", placeholder: "ID" },
           { data: "name", type: "text", placeholder: "name" },
           { data: "mail", type: "text", placeholder: "E-mail" },
           {
             data: "department",
             type: "dropdown",
-            placeholder: "department",
-            source: ["test", "test2", "test3"]
+            placeholder: "department"
           },
           { data: "position", type: "text", placeholder: "position" }
         ],
@@ -67,7 +66,7 @@ export default {
   },
   created: async function() {
     await this.$emit("getTableContents");
-    console.log(await this.members);
+    await this.setCellMeta();
   },
   // watch: {
   //   members: async function() {
@@ -85,6 +84,33 @@ export default {
     },
     getMembers: function() {
       console.log(this.members);
+    },
+    setCellMeta: function() {
+      const departmentData = this.department;
+      const membersData = this.members;
+
+      this.$refs.hotTable.hotInstance.updateSettings({
+        cells: function(row, col, prop) {
+          const cellProperties = {};
+          // ドロップダウンメニュー項目の設定
+          if (prop === "department") {
+            cellProperties.source = departmentData;
+          }
+          const table = this.instance.getSourceData();
+
+          // readOnlyにするセルの設定。
+          if (table[row]) {
+            if (prop === "id" && table[row].initial) {
+              cellProperties.readOnly = true;
+            }
+            if (prop === "name" && table[row].initial) {
+              cellProperties.readOnly = true;
+            }
+          }
+          return cellProperties;
+        }
+      });
+      // updateReadOnly = false;
     },
     beforeRemoveRowVue: function(index, amount, physicalRows, source) {
       console.log(this.test);
