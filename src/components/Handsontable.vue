@@ -8,6 +8,7 @@
 
 <script>
 import { HotTable } from "@handsontable/vue";
+import { setTimeout } from "timers";
 
 export default {
   name: "Handsontable",
@@ -64,20 +65,14 @@ export default {
       }
     };
   },
-  created: async function() {
-    await this.$emit("getTableContents");
-    await this.setCellMeta();
+  created: function() {
+    this.$emit("getTableContents");
   },
-  // watch: {
-  //   members: async function() {
-  //     console.log(this.members);
-  //     await this.$refs.hotTable.hotInstance.render();
-  //     console.log(this.$refs.hotTable.hotInstance.getData());
-  //   },
-  //   department: function() {
-  //     console.log(this.department);
-  //   }
-  // },
+  watch: {
+    department: function() {
+      this.setCellMeta();
+    }
+  },
   methods: {
     getTableData: function() {
       console.log(this.$refs.hotTable.hotInstance.getSourceData());
@@ -85,17 +80,18 @@ export default {
     getMembers: function() {
       console.log(this.members);
     },
-    setCellMeta: function() {
-      const departmentData = this.department;
-      const membersData = this.members;
+    setCellMeta: async function() {
+      const departmentData = await this.department;
+      console.log(await departmentData);
 
-      this.$refs.hotTable.hotInstance.updateSettings({
+      await this.$refs.hotTable.hotInstance.updateSettings({
         cells: function(row, col, prop) {
           const cellProperties = {};
           // ドロップダウンメニュー項目の設定
           if (prop === "department") {
             cellProperties.source = departmentData;
           }
+
           const table = this.instance.getSourceData();
 
           // readOnlyにするセルの設定。
@@ -107,10 +103,10 @@ export default {
               cellProperties.readOnly = true;
             }
           }
+          // console.log(cellProperties);
           return cellProperties;
         }
       });
-      // updateReadOnly = false;
     },
     beforeRemoveRowVue: function(index, amount, physicalRows, source) {
       console.log(this.test);
