@@ -10,6 +10,7 @@
 <script>
 import api from "axios";
 import Handsontable from "./Handsontable";
+import { maxLength } from "./CustomHooks.js";
 
 export default {
   name: "TableIndex",
