@@ -82,7 +82,7 @@ export default {
           }
         },
         minSpareRows: 1,
-        beforeRemoveRow: this.beforeRemoveRowVue,
+        // beforeRemoveRow: this.beforeRemoveRowVue,
         afterChange: this.afterChangeVue
       }
     };
@@ -104,7 +104,6 @@ export default {
       for (let i = 0; i < tableData.length - 1; i++) {
         numOfRows.push(i);
       }
-      console.log(numOfRows);
       const numberOfTableRows = this.$refs.hotTable.hotInstance.validateRows(
         numOfRows,
         valid => {
@@ -123,7 +122,6 @@ export default {
     },
     setCellMeta: async function() {
       const departmentData = await this.department;
-      console.log(await departmentData);
       // let test = 0;
 
       await this.$refs.hotTable.hotInstance.updateSettings({
@@ -151,13 +149,13 @@ export default {
         }
       });
     },
-    beforeRemoveRowVue: function(index, amount, physicalRows, source) {
-      console.log(this.test);
-      console.log(index);
-      console.log(amount);
-      console.log(physicalRows);
-      console.log(source);
-    },
+    // beforeRemoveRowVue: function(index, amount, physicalRows, source) {
+    //   console.log(this.test);
+    //   console.log(index);
+    //   console.log(amount);
+    //   console.log(physicalRows);
+    //   console.log(source);
+    // },
     afterChangeVue: function(changes, source) {
       if (source === "loadData") {
         return;
