@@ -34,22 +34,64 @@ export default {
       return api.get(`${this.getUrl}/department`);
     },
     getTableContents: async function() {
-      try {
-        const getData = await api.all([
-          this.getMembers(),
-          this.getDepartment()
-        ]);
-        const membersData = getData[0].data;
-        const departmentData = getData[1].data;
+      // const getData = await api.all([this.getMembers(), this.getDepartment()]);
+      // const membersData = getData[0].data;
+      // const departmentData = getData[1].data;
+      const membersData = [
+        {
+          id: 1,
+          name: "Paul",
+          mail: "paul@mail.com",
+          department: "Marketing",
+          position: "Manager"
+        },
+        {
+          id: 2,
+          name: "Tom",
+          mail: "tom@mail.com",
+          department: "Engineering",
+          position: "Manager"
+        },
+        {
+          id: 3,
+          name: "Ethan",
+          mail: "tom@mail.com",
+          department: "Accounting",
+          position: "Manager"
+        },
+        {
+          id: 4,
+          name: "Michael",
+          mail: "tom@mail.com",
+          department: "Engineering",
+          position: "Manager"
+        },
+        {
+          id: 5,
+          name: "Ann",
+          mail: "tom@mail.com",
+          department: "Marketing",
+          position: "Manager"
+        }
+      ];
 
-        membersData.map(key => (key.initial = true));
+      membersData.map(key => (key.initial = true));
 
-        this.members = membersData;
-        this.department = departmentData;
-      } catch (error) {
-        alert(error);
-      }
+      const departmentData = ["Marketing", "Engineering", "Accounting"];
+
+      this.members = membersData;
+      this.department = departmentData;
     },
+    // getTableContents: async function() {
+    //   const getData = await api.all([this.getMembers(), this.getDepartment()]);
+    //   const membersData = getData[0].data;
+    //   const departmentData = getData[1].data;
+
+    //   membersData.map(key => (key.initial = true));
+
+    //   this.members = membersData;
+    //   this.department = departmentData;
+    // },
     updateMembers: function(payload) {
       this.members = payload;
     }
