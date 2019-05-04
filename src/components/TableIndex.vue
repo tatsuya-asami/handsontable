@@ -34,14 +34,21 @@ export default {
       return api.get(`${this.getUrl}/department`);
     },
     getTableContents: async function() {
-      const getData = await api.all([this.getMembers(), this.getDepartment()]);
-      const membersData = getData[0].data;
-      const departmentData = getData[1].data;
+      try {
+        const getData = await api.all([
+          this.getMembers(),
+          this.getDepartment()
+        ]);
+        const membersData = getData[0].data;
+        const departmentData = getData[1].data;
 
-      membersData.map(key => (key.initial = true));
+        membersData.map(key => (key.initial = true));
 
-      this.members = membersData;
-      this.department = departmentData;
+        this.members = membersData;
+        this.department = departmentData;
+      } catch (error) {
+        alert(error);
+      }
     },
     updateMembers: function(payload) {
       this.members = payload;
