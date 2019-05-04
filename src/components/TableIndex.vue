@@ -27,13 +27,13 @@ export default {
     getUrl: () => "http://localhost:3000"
   },
   methods: {
-    getMembers: function() {
-      return api.get(`${this.getUrl}/members`);
-    },
-    getDepartment: function() {
-      return api.get(`${this.getUrl}/department`);
-    },
-    getTableContents: async function() {
+    // getMembers: function() {
+    //   return api.get(`${this.getUrl}/members`);
+    // },
+    // getDepartment: function() {
+    //   return api.get(`${this.getUrl}/department`);
+    // },
+    getTableContents: function() {
       // const getData = await api.all([this.getMembers(), this.getDepartment()]);
       // const membersData = getData[0].data;
       // const departmentData = getData[1].data;

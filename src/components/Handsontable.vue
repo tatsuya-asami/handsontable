@@ -2,6 +2,7 @@
   <div>
     <button @click="getTableData">tableData</button>
     <button @click="getMembers">members</button>
+    <button @click="postSimulate">POST!</button>
     <HotTable ref="hotTable" :data="members" :settings="hotSettings"/>
   </div>
 </template>
@@ -27,6 +28,7 @@ export default {
   data: function() {
     return {
       test: "testttt",
+      editedRow: null,
       hotSettings: {
         dataSchema: {
           id: null,
@@ -83,6 +85,7 @@ export default {
         },
         minSpareRows: 1,
         // beforeRemoveRow: this.beforeRemoveRowVue,
+        afterBeginEditing: this.afterBeginEditingVue,
         afterChange: this.afterChangeVue
       }
     };
@@ -100,25 +103,64 @@ export default {
       const tableData = this.$refs.hotTable.hotInstance.getSourceData();
       console.log(tableData);
       // numOfRowsが現在のテーブルの行-1までの配列になるようにする。
+      // const numOfRows = [];
+      // for (let i = 0; i < tableData.length - 1; i++) {
+      //   numOfRows.push(i);
+      // }
+      // this.$refs.hotTable.hotInstance.validateRows(numOfRows, valid => {
+      //   if (!valid) {
+      //     console.log(valid);
+      //     alert("空欄または不正なデータが入力されています。");
+      //     return;
+      //   }
+      //   // ここに次の処理を書く。
+      //   alert("送信完了しました！");
+      // });
+
+      // const numberOfTableRows = this.$refs.hotTable.hotInstance.validateRows(
+      //   numOfRows,
+      //   valid => {
+      //     if (!valid) {
+      //       console.log(valid);
+      //       alert("空欄または不正なデータが入力されています。");
+      //       return;
+      //     }
+      //     // ここに次の処理を書く。
+      //     alert("送信完了しました！");
+      //   }
+      // );
+    },
+    getMembers: function() {
+      console.log(this.members);
+    },
+    postSimulate: function() {
+      const tableData = this.$refs.hotTable.hotInstance.getSourceData();
+      // 何も編集していなければここで終了
+      if (!this.editedRow) {
+        return;
+      }
+      // numOfRowsが現在のテーブルの行-1までの配列になるようにする。
       const numOfRows = [];
       for (let i = 0; i < tableData.length - 1; i++) {
         numOfRows.push(i);
       }
-      const numberOfTableRows = this.$refs.hotTable.hotInstance.validateRows(
-        numOfRows,
-        valid => {
-          if (!valid) {
-            console.log(valid);
-            alert("空欄または不正なデータが入力されています。");
-            return;
-          }
-          // ここに次の処理を書く。
-          alert("送信完了しました！");
+      // 最終行を編集し始めていたらバリデーションチェックする。
+      if (this.editedRow === tableData.length - 1) {
+        numOfRows.push(this.editedRow);
+      }
+      console.log(tableData.length - 1);
+      console.log(this.editedRow);
+      console.log(numOfRows);
+      this.$refs.hotTable.hotInstance.validateRows(numOfRows, valid => {
+        if (!valid) {
+          console.log(valid);
+          alert("空欄または不正なデータが入力されています。");
+          return;
         }
-      );
-    },
-    getMembers: function() {
-      console.log(this.members);
+        // ここに次の処理を書く。
+        alert("送信完了しました！");
+      });
+      console.log(tableData);
     },
     setCellMeta: async function() {
       const departmentData = await this.department;
@@ -162,6 +204,9 @@ export default {
       }
       const tableData = this.$refs.hotTable.hotInstance.getSourceData();
       this.$emit("updateMembers", tableData);
+    },
+    afterBeginEditingVue: function(row) {
+      this.editedRow = row;
     }
   }
 };
