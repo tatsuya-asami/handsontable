@@ -148,9 +148,9 @@ export default {
       if (this.editedRow === tableData.length - 1) {
         numOfRows.push(this.editedRow);
       }
-      console.log(tableData.length - 1);
-      console.log(this.editedRow);
-      console.log(numOfRows);
+      // console.log(tableData.length - 1);
+      // console.log(this.editedRow);
+      // console.log(numOfRows);
       this.$refs.hotTable.hotInstance.validateRows(numOfRows, valid => {
         if (!valid) {
           console.log(valid);
