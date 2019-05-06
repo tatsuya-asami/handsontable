@@ -9,6 +9,8 @@
 
 <script>
 import { HotTable } from "@handsontable/vue";
+import { maxLength } from "./CustomHooks.js";
+import firebase from "../../firebase.js";
 
 export default {
   name: "Handsontable",
@@ -102,41 +104,29 @@ export default {
     getTableData: function() {
       const tableData = this.$refs.hotTable.hotInstance.getSourceData();
       console.log(tableData);
-      // numOfRowsが現在のテーブルの行-1までの配列になるようにする。
-      // const numOfRows = [];
-      // for (let i = 0; i < tableData.length - 1; i++) {
-      //   numOfRows.push(i);
-      // }
-      // this.$refs.hotTable.hotInstance.validateRows(numOfRows, valid => {
-      //   if (!valid) {
-      //     console.log(valid);
-      //     alert("空欄または不正なデータが入力されています。");
-      //     return;
-      //   }
-      //   // ここに次の処理を書く。
-      //   alert("送信完了しました！");
-      // });
-
-      // const numberOfTableRows = this.$refs.hotTable.hotInstance.validateRows(
-      //   numOfRows,
-      //   valid => {
-      //     if (!valid) {
-      //       console.log(valid);
-      //       alert("空欄または不正なデータが入力されています。");
-      //       return;
-      //     }
-      //     // ここに次の処理を書く。
-      //     alert("送信完了しました！");
-      //   }
-      // );
     },
     getMembers: function() {
       console.log(this.members);
     },
+    postFirebase: function(tableData) {
+      const tableDatabase = firebase
+        .firestore()
+        .collection("test1")
+        .doc("table");
+
+      return new Promise((resolve, reject) => {
+        resolve(
+          tableDatabase.update({
+            members: tableData
+          })
+        );
+        reject("error");
+      });
+    },
     postSimulate: function() {
       const tableData = this.$refs.hotTable.hotInstance.getSourceData();
       // 何も編集していなければここで終了
-      if (!this.editedRow) {
+      if (this.editedRow === null) {
         return;
       }
       // numOfRowsが現在のテーブルの行-1までの配列になるようにする。
@@ -148,25 +138,27 @@ export default {
       if (this.editedRow === tableData.length - 1) {
         numOfRows.push(this.editedRow);
       }
-      // console.log(tableData.length - 1);
-      // console.log(this.editedRow);
-      // console.log(numOfRows);
-      this.$refs.hotTable.hotInstance.validateRows(numOfRows, valid => {
-        if (!valid) {
-          console.log(valid);
-          alert("空欄または不正なデータが入力されています。");
-          return;
-        }
-        // ここに次の処理を書く。
-        alert("送信完了しました！");
-      });
-      console.log(tableData);
+
+      try {
+        this.$refs.hotTable.hotInstance.validateRows(numOfRows, async valid => {
+          if (!valid) {
+            alert("空欄または不正なデータが入力されています。");
+            return;
+          }
+
+          const postData = await this.postFirebase(tableData);
+          console.log(tableData);
+          alert("送信完了しました！");
+        });
+      } catch (err) {
+        alert(err);
+      }
     },
-    setCellMeta: async function() {
-      const departmentData = await this.department;
+    setCellMeta: function() {
+      const departmentData = this.department;
       // let test = 0;
 
-      await this.$refs.hotTable.hotInstance.updateSettings({
+      this.$refs.hotTable.hotInstance.updateSettings({
         cells: function(row, col, prop) {
           const cellProperties = {};
           // ドロップダウンメニュー項目の設定

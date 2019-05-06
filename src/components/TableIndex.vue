@@ -1,16 +1,18 @@
 <template>
-  <Handsontable
-    :members="members"
-    :department="department"
-    @getTableContents="getTableContents"
-    @updateMembers="updateMembers"
-  />
+  <div>
+    <Handsontable
+      :members="members"
+      :department="department"
+      @getTableContents="getTableContents"
+      @updateMembers="updateMembers"
+    />
+  </div>
 </template>
 
 <script>
 import api from "axios";
 import Handsontable from "./Handsontable";
-import { maxLength } from "./CustomHooks.js";
+import firebase from "../../firebase.js";
 
 export default {
   name: "TableIndex",
@@ -23,75 +25,70 @@ export default {
       department: []
     };
   },
-  computed: {
-    getUrl: () => "http://localhost:3000"
+  mounted: function() {
+    this.getTableContents();
   },
   methods: {
-    // getMembers: function() {
-    //   return api.get(`${this.getUrl}/members`);
-    // },
-    // getDepartment: function() {
-    //   return api.get(`${this.getUrl}/department`);
-    // },
-    getTableContents: function() {
-      // const getData = await api.all([this.getMembers(), this.getDepartment()]);
-      // const membersData = getData[0].data;
-      // const departmentData = getData[1].data;
-      const membersData = [
-        {
-          id: 1,
-          name: "Paul",
-          mail: "paul@mail.com",
-          department: "Marketing",
-          position: "Manager"
-        },
-        {
-          id: 2,
-          name: "Tom",
-          mail: "tom@mail.com",
-          department: "Engineering",
-          position: "Manager"
-        },
-        {
-          id: 3,
-          name: "Ethan",
-          mail: "tom@mail.com",
-          department: "Accounting",
-          position: "Manager"
-        },
-        {
-          id: 4,
-          name: "Michael",
-          mail: "tom@mail.com",
-          department: "Engineering",
-          position: "Manager"
-        },
-        {
-          id: 5,
-          name: "Ann",
-          mail: "tom@mail.com",
-          department: "Marketing",
-          position: "Manager"
-        }
-      ];
+    getTableContents: async function() {
+      const tableDatabase = firebase
+        .firestore()
+        .collection("test1")
+        .doc("table");
 
-      membersData.map(key => (key.initial = true));
+      try {
+        // await tableDatabase.set({
+        //   department: ["Marketing", "Engineering", "Accounting"],
+        //   members: [
+        //     {
+        //       id: 1,
+        //       name: "Paul",
+        //       mail: "paul@mail.com",
+        //       department: "Marketing",
+        //       position: "Manager"
+        //     },
+        //     {
+        //       id: 2,
+        //       name: "Tom",
+        //       mail: "tom@mail.com",
+        //       department: "Engineering",
+        //       position: "Manager"
+        //     },
+        //     {
+        //       id: 3,
+        //       name: "Ethan",
+        //       mail: "ethan@mail.com",
+        //       department: "Accounting",
+        //       position: "Manager"
+        //     },
+        //     {
+        //       id: 4,
+        //       name: "Jasper",
+        //       mail: "paul@mail.com",
+        //       department: "Accounting",
+        //       position: "Manager"
+        //     },
+        //     {
+        //       id: 5,
+        //       name: "Brandon",
+        //       mail: "paul@mail.com",
+        //       department: "Marketing",
+        //       position: "Manager"
+        //     }
+        //   ]
+        // });
+        const getData = await tableDatabase.get();
+        // console.log(getData.data().members);
+        const membersData = getData.data().members;
+        const departmentData = getData.data().department;
 
-      const departmentData = ["Marketing", "Engineering", "Accounting"];
+        membersData.map(key => (key.initial = true));
 
-      this.members = membersData;
-      this.department = departmentData;
+        this.members = membersData;
+        this.department = departmentData;
+      } catch (err) {
+        alert(err);
+      }
     },
-    // getTableContents: async function() {
-    //   const getData = await api.all([this.getMembers(), this.getDepartment()]);
-    //   const membersData = getData[0].data;
-    //   const departmentData = getData[1].data;
-
-    //   membersData.map(key => (key.initial = true));
-
-    //   this.members = membersData;
-    //   this.department = departmentData;
-    // },
     updateMembers: function(payload) {
       this.members = payload;
     }
