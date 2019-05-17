@@ -15,6 +15,7 @@ import api from "axios";
 import Handsontable from "./Handsontable";
 import firebase from "../../firebase.js";
 import sampleData from "./sampleData.js";
+import axios from "axios";
 
 export default {
   name: "TableIndex",
@@ -34,7 +35,14 @@ export default {
         .collection("test1")
         .doc("table")
   },
+  mounted: function() {
+    this.getFunction();
+  },
   methods: {
+    getFunction: async function() {
+      const data = await firebase.functions().httpsCallable("helloWorld");
+      console.log(data);
+    },
     setSampleData: function() {
       return new Promise(resolve => {
         resolve(this.tableDatabase.set(sampleData));

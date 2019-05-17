@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { HotTable } from "@handsontable/vue";
 import { maxLength } from "./CustomHooks.js";
 import firebase from "../../firebase.js";
@@ -105,9 +106,13 @@ export default {
     }
   },
   methods: {
-    getTableData: function() {
+    getTableData: async function() {
       const tableData = this.$refs.hotTable.hotInstance.getSourceData();
       console.log(tableData);
+      const apiData = await axios.get(
+        "https://us-central1-handsontable-f68d2.cloudfunctions.net/helloWorld"
+      );
+      console.log(apiData);
     },
     getMembers: function() {
       console.log(this.members);
