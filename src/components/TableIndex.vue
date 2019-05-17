@@ -1,5 +1,9 @@
 <template>
   <div>
+    <img
+      src="https://firebasestorage.googleapis.com/v0/b/handsontable-f68d2.appspot.com/o/testshot.png?alt=media&token=3e72a30a-cd3b-4897-a8e5-dacd69473a0e"
+    >
+    <img src="testshot.png">
     <Handsontable
       :members="members"
       :department="department"
@@ -25,7 +29,8 @@ export default {
   data: function() {
     return {
       members: [],
-      department: []
+      department: [],
+      img: null
     };
   },
   computed: {
@@ -37,8 +42,16 @@ export default {
   },
   mounted: function() {
     this.getFunction();
+    this.getStorage();
   },
   methods: {
+    getStorage: function() {
+      const storage = firebase.storage();
+      const storageRef = storage.ref();
+      const imageRef = storageRef.child("testshot.png");
+      this.img = imageRef;
+      console.log(imageRef);
+    },
     getFunction: async function() {
       const data = await firebase.functions().httpsCallable("helloWorld");
       console.log(data);
