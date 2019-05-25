@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :src="img" width="50%">
+    <img :src="testShot" width="50%">
     <Handsontable
       :members="members"
       :department="department"
@@ -27,7 +27,7 @@ export default {
     return {
       members: [],
       department: [],
-      img: ""
+      testShot: ""
     };
   },
   computed: {
@@ -41,27 +41,18 @@ export default {
     this.getFunction();
     this.getStorage();
   },
-  // watch: {
-  //   img: function() {
-  //     return this.img;
-  //   }
-  // },
   methods: {
     getStorage: async function() {
       const storage = firebase.storage();
-      const storageRef = storage.ref("testshot.png");
-      const imageRef = storageRef.child("testshot.png");
-      const imageData = storage.refFromURL(
-        "gs://handsontable-f68d2.appspot.com/testshot.png"
-      );
-      this.img =
-        "https://firebasestorage.googleapis.com/v0/b/handsontable-f68d2.appspot.com/o/testshot.png?alt=media&token=3e72a30a-cd3b-4897-a8e5-dacd69473a0e";
-      // this.img = storageRef;
-      // console.log(storageRef);
-      console.log(this.img);
-      // console.log(this.img);
-      // const getImg = await axios.get(storageRef);
-      // console.log(getImg);
+      const storageRef = storage.ref();
+      const testShot = storageRef.child("testshot.png");
+
+      try {
+        const testShotUrl = await testShot.getDownloadURL();
+        this.testShot = testShotUrl;
+      } catch (err) {
+        alert(err);
+      }
     },
     getFunction: async function() {
       const data = await firebase.functions().httpsCallable("helloWorld");
