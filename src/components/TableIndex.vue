@@ -56,7 +56,7 @@ export default {
       );
       // this.img =
       //   "https://firebasestorage.googleapis.com/v0/b/handsontable-f68d2.appspot.com/o/testshot.png?alt=media&token=3e72a30a-cd3b-4897-a8e5-dacd69473a0e";
-      this.img = imageRef;
+      this.img = storageRef;
       // console.log(storageRef);
       console.log(this.img);
       // console.log(this.img);
