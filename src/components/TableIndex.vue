@@ -1,9 +1,6 @@
 <template>
   <div>
-    <img
-      src="https://firebasestorage.googleapis.com/v0/b/handsontable-f68d2.appspot.com/o/testshot.png?alt=media&token=3e72a30a-cd3b-4897-a8e5-dacd69473a0e"
-    >
-    <img src="testshot.png">
+    <img :src="img" width="50%">
     <Handsontable
       :members="members"
       :department="department"
@@ -30,7 +27,7 @@ export default {
     return {
       members: [],
       department: [],
-      img: null
+      img: ""
     };
   },
   computed: {
@@ -44,17 +41,31 @@ export default {
     this.getFunction();
     this.getStorage();
   },
+  // watch: {
+  //   img: function() {
+  //     return this.img;
+  //   }
+  // },
   methods: {
-    getStorage: function() {
+    getStorage: async function() {
       const storage = firebase.storage();
-      const storageRef = storage.ref();
+      const storageRef = storage.ref("testshot.png");
       const imageRef = storageRef.child("testshot.png");
+      const imageData = storage.refFromURL(
+        "gs://handsontable-f68d2.appspot.com/testshot.png"
+      );
+      // this.img =
+      //   "https://firebasestorage.googleapis.com/v0/b/handsontable-f68d2.appspot.com/o/testshot.png?alt=media&token=3e72a30a-cd3b-4897-a8e5-dacd69473a0e";
       this.img = imageRef;
-      console.log(imageRef);
+      // console.log(storageRef);
+      console.log(this.img);
+      // console.log(this.img);
+      // const getImg = await axios.get(storageRef);
+      // console.log(getImg);
     },
     getFunction: async function() {
       const data = await firebase.functions().httpsCallable("helloWorld");
-      console.log(data);
+      // console.log(data);
     },
     setSampleData: function() {
       return new Promise(resolve => {
