@@ -1,6 +1,11 @@
 <template>
   <div>
     <img :src="testShot" width="50%">
+    <div style="margin: 20px">
+      <p>アップロードすると上の画像が変わります。</p>
+      <input type="file" @change="e => stageFile(e.target.files)">
+      <button @click="uploadStorage">upload</button>
+    </div>
     <Handsontable
       :members="members"
       :department="department"
@@ -27,7 +32,8 @@ export default {
     return {
       members: [],
       department: [],
-      testShot: ""
+      testShot: "",
+      uploadFile: null
     };
   },
   computed: {
@@ -45,7 +51,7 @@ export default {
     getStorage: async function() {
       const storage = firebase.storage();
       const storageRef = storage.ref();
-      const testShot = storageRef.child("testshot.png");
+      const testShot = storageRef.child("test/newimg");
 
       try {
         const testShotUrl = await testShot.getDownloadURL();
@@ -54,9 +60,20 @@ export default {
         alert(err);
       }
     },
+    stageFile: function(value) {
+      this.uploadFile = value[0];
+      console.log(value[0]);
+    },
+    uploadStorage: async function() {
+      const storageRef = firebase.storage().ref();
+      const newShot = storageRef.child("test/newimg");
+
+      const putFile = await newShot.put(this.uploadFile);
+      console.log(putFile);
+      this.getStorage();
+    },
     getFunction: async function() {
       const data = await firebase.functions().httpsCallable("helloWorld");
-      // console.log(data);
     },
     setSampleData: function() {
       return new Promise(resolve => {
