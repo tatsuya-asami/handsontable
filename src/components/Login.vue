@@ -23,20 +23,20 @@ export default {
     renderLogin: function() {
       const ui = new firebaseui.auth.AuthUI(firebase.auth());
       ui.start("#firebaseui-auth-container", uiConfig);
-    },
-    logout: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            alert("ログアウトしました");
-          })
-          .catch(error => {
-            alert(`ログアウト時にエラーが発生しました (${error})`);
-          });
-      });
     }
+    // logout: function() {
+    //   firebase.auth().onAuthStateChanged(user => {
+    //     firebase
+    //       .auth()
+    //       .signOut()
+    //       .then(() => {
+    //         alert("ログアウトしました");
+    //       })
+    //       .catch(error => {
+    //         alert(`ログアウト時にエラーが発生しました (${error})`);
+    //       });
+    //   });
+    // }
   }
 };
 </script>
