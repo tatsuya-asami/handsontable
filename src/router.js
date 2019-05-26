@@ -30,10 +30,10 @@ const router = new Router({
         {
           path: "/table",
           name: "table",
-          component: Table
-          // meta: {
-          //   requiresAuth: true
-          // }
+          component: Table,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: "/about",
