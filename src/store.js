@@ -1,10 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import store from "./store";
 
 Vue.use(Vuex);
 
-const router = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     loginStatus: false
   },
@@ -18,5 +17,3 @@ const router = new Vuex.Store({
   },
   actions: {}
 });
-
-export default router;
