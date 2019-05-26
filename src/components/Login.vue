@@ -13,8 +13,6 @@ import firebase from "../../firebase.js";
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 ui.start("#firebaseui-auth-container", uiConfig);
 
-ui;
-
 export default {
   name: "Login"
 };
