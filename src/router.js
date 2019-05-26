@@ -10,6 +10,9 @@ import About from "./views/About.vue";
 
 Vue.use(Router);
 
+const pageTitle = document.title;
+console.log(pageTitle);
+
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -17,14 +20,19 @@ const router = new Router({
     {
       path: "/login",
       name: "login",
-      component: Login
+      component: Login,
+      meta: {
+        requiresAuth: false,
+        title: `Login / ${pageTitle}`
+      }
     },
     {
       path: "/",
       name: "home",
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: `Home / ${pageTitle}`
       },
       children: [
         {
@@ -32,7 +40,8 @@ const router = new Router({
           name: "table",
           component: Table,
           meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: `Table / ${pageTitle}`
           }
         },
         {
@@ -40,7 +49,8 @@ const router = new Router({
           name: "about",
           component: About,
           meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: `About / ${pageTitle}`
           }
         }
       ]
@@ -63,7 +73,8 @@ router.beforeEach((to, from, next) => {
   // console.log(from);
   // console.log(next);
   // console.log(loginStatus);
-
+  document.title = to.meta.title;
+  console.log(document.title);
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // このルートはログインされているかどうか認証が必要です。
     // もしされていないならば、ログインページにリダイレクトします。
