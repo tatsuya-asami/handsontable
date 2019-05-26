@@ -1,9 +1,16 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <Login/> -->
+
+    <div id="nav">
+      <router-link to="/">Home</router-link>|
+      <router-link to="/table">table</router-link>|
+      <router-link to="/about">About</router-link>
+    </div>
     <h3>login中</h3>
     <button>ログアウト</button>
+    <router-view/>
   </div>
 </template>
 

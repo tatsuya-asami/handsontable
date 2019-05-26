@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="logout">logout</button>
+    <!-- <button @click="logout">logout</button> -->
     <h1>Welcome to My Awesome App</h1>
     <div id="firebaseui-auth-container"></div>
     <div id="loader">Loading...</div>
