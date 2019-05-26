@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 // import "firebaseui";
 import store from "./store";
 import Home from "./views/Home.vue";
+import Login from "./views/Login.vue";
 import Table from "./views/Table.vue";
 import About from "./views/About.vue";
 
@@ -17,6 +18,11 @@ const router = new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
     },
     {
       path: "/table",

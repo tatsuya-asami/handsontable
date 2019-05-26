@@ -11,12 +11,19 @@
 import uiConfig from "./authSettings.js";
 import firebase from "../../firebase.js";
 
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
-ui.start("#firebaseui-auth-container", uiConfig);
+// const ui = new firebaseui.auth.AuthUI(firebase.auth());
+// ui.start("#firebaseui-auth-container", uiConfig);
 
 export default {
   name: "Login",
+  mounted: function() {
+    this.renderLogin();
+  },
   methods: {
+    renderLogin: function() {
+      const ui = new firebaseui.auth.AuthUI(firebase.auth());
+      ui.start("#firebaseui-auth-container", uiConfig);
+    },
     logout: function() {
       firebase.auth().onAuthStateChanged(user => {
         firebase
