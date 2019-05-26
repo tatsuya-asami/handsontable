@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <TableIndex/>
+    <Login/>
+    <!-- <TableIndex/> -->
   </div>
 </template>
 
 <script>
+import Login from "./components/Login.vue";
 import TableIndex from "./components/TableIndex.vue";
 
 export default {
   name: "app",
   components: {
+    Login,
     TableIndex
   }
 };

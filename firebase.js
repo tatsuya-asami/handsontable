@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/functions";
 import "firebase/storage";
+// import firebaseui from "firebaseui";
 
 // const settings = { timestampsInSnapshots: true };
 
@@ -16,9 +17,12 @@ const config = {
 };
 firebase.initializeApp(config);
 
+// var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 // firebase.firestore().settings(settings);
 firebase.firestore();
 firebase.functions();
 firebase.storage();
+// firebase.auth();
 
 export default firebase;
