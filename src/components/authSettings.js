@@ -1,10 +1,5 @@
 import firebase from "firebase/app";
-// import "firebase/firestore";
-// import "firebase/functions";
-// import "firebase/storage";
-import firebaseui from "firebaseui";
-
-// const ui = new firebaseui.auth.AuthUI(firebase.auth());
+import "firebaseui";
 
 const uiConfig = {
   callbacks: {
@@ -24,7 +19,7 @@ const uiConfig = {
   },
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
   signInFlow: "popup",
-  signInSuccessUrl: "https://handsontable-f68d2.firebaseapp.com/",
+  signInSuccessUrl: "/about",
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -39,7 +34,5 @@ const uiConfig = {
   // Privacy policy url.
   privacyPolicyUrl: "<your-privacy-policy-url>"
 };
-
-// ui.start("#firebaseui-auth-container", uiConfig);
 
 export default uiConfig;

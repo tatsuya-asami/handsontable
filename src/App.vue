@@ -1,22 +1,12 @@
 <template>
   <div id="app">
-    <Login/>
-    <!-- <TableIndex/> -->
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import Login from "./components/Login.vue";
-import TableIndex from "./components/TableIndex.vue";
-
-export default {
-  name: "app",
-  components: {
-    Login,
-    TableIndex
-  }
-};
-</script>
 
 <style lang="scss">
 #app {
