@@ -74,6 +74,15 @@ export default {
     },
     getFunction: async function() {
       const data = await firebase.functions().httpsCallable("helloWorld");
+      console.log(data);
+      // const reqData = await axios.get(
+      //   "https://us-central1-handsontable-f68d2.cloudfunctions.net/helloWorld"
+      // );
+      const reqData = await axios.get(
+        "https://us-central1-handsontable-f68d2.cloudfunctions.net/test"
+      );
+      console.log(reqData.data);
+      alert(reqData.data);
     },
     setSampleData: function() {
       return new Promise(resolve => {

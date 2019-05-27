@@ -8,10 +8,12 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
 });
 exports.test = functions.https.onRequest((request, response) => {
-  if (!request) {
-    return;
-  }
-  response.send("test from Firebase!");
+  // if (request.method === "GET") {
+  //   response.send("test from Firebase!");
+  // }
+  const sendData = ["test from Firebase!", "プリプリ〜", "当たり！"];
+  const random = Math.floor(Math.random() * 3);
+  response.send(sendData[random]);
 });
 exports.oncall = functions.https.onCall((data, context) => {
   return "test";

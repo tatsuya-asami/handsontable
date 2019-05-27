@@ -11,7 +11,7 @@ import About from "./views/About.vue";
 Vue.use(Router);
 
 const pageTitle = document.title;
-console.log(pageTitle);
+// console.log(pageTitle);
 
 const router = new Router({
   mode: "history",
@@ -74,13 +74,13 @@ router.beforeEach((to, from, next) => {
   // console.log(next);
   // console.log(loginStatus);
   document.title = to.meta.title;
-  console.log(document.title);
+  // console.log(document.title);
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // このルートはログインされているかどうか認証が必要です。
     // もしされていないならば、ログインページにリダイレクトします。
 
     firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
+      // console.log(user);
       if (!user) {
         next({
           name: "login"
